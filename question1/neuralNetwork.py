@@ -7,8 +7,14 @@ import matplotlib.pyplot as plt
 
 
 class NN(object):
-
-    def __init__(self, hidden_dims=(512, 1024), n_hidden=2, para_init="Zero", mode='train', model_path=None):
+    def __init__(
+        self,
+        hidden_dims=(512, 1024),
+        n_hidden=2,
+        para_init="Zero",
+        mode="train",
+        model_path=None,
+    ):
         self.hidden_dims = hidden_dims
         self.n_hidden = n_hidden
         self.mode = mode
@@ -21,13 +27,20 @@ class NN(object):
         self.activations = []
         self.relu = Relu()
         self.linear_layers.append(
-            Linear(self.input_size, self.hidden_dims[0], parameter_init=para_init))
+            Linear(self.input_size, self.hidden_dims[0], parameter_init=para_init)
+        )
         for i in range(n_hidden - 1):
             self.linear_layers.append(
-                Linear(self.hidden_dims[i], self.hidden_dims[i + 1], parameter_init=para_init))
+                Linear(
+                    self.hidden_dims[i],
+                    self.hidden_dims[i + 1],
+                    parameter_init=para_init,
+                )
+            )
 
         self.linear_layers.append(
-            Linear(self.hidden_dims[-1], self.n_class, parameter_init=para_init))
+            Linear(self.hidden_dims[-1], self.n_class, parameter_init=para_init)
+        )
 
     def forward(self, input):
         for i in range(self.n_hidden):
@@ -42,8 +55,10 @@ class NN(object):
     def loss(self, true_labels, prediction):
         n_total = len(true_labels)
         # sum of loss over all data samples
-        loss = np.sum(-prediction[np.arange(n_total),
-                                  np.int_(true_labels)] + logsumexp(prediction, axis=1))
+        loss = np.sum(
+            -prediction[np.arange(n_total), np.int_(true_labels)]
+            + logsumexp(prediction, axis=1)
+        )
 
         return loss
 
@@ -55,6 +70,10 @@ class NN(object):
         return inp_softmax
 
     def backward(self, input, true_labels, prediction):
+
+        # make sure that forward has been called once
+        assert len(self.activations) > 0
+
         L = self.n_hidden
         n_total = len(true_labels)
         onehot = np.zeros((n_total, 10))
@@ -76,11 +95,11 @@ class NN(object):
 
             if l < L:
                 grad_al = np.matmul(
-                    grad_y[-1], self.linear_layers[l + 1].weights)  # N * h2
+                    grad_y[-1], self.linear_layers[l + 1].weights
+                )  # N * h2
                 grad_a.append(grad_al)
 
-                grad_yl = grad_al * \
-                    self.relu.derivative(self.activations[l])
+                grad_yl = grad_al * self.relu.derivative(self.activations[l])
                 grad_y.append(grad_yl)
 
             grad_bl = grad_y[-1]
@@ -89,8 +108,7 @@ class NN(object):
             if l == 0:
                 grad_wl = np.matmul(grad_y[-1].T, input)
             else:
-                grad_wl = np.matmul(
-                    grad_y[-1].T, self.activations[l - 1])
+                grad_wl = np.matmul(grad_y[-1].T, self.activations[l - 1])
 
             grad_w.append(grad_wl)
 
@@ -98,6 +116,9 @@ class NN(object):
             # grad_y[i] = np.sum(grad_y[i], axis=0)
             # grad_a[i] = np.sum(grad_a[i], axis=0)
             grad_b[i] = np.sum(grad_b[i], axis=0, keepdims=True).T
+
+        # Clear activations
+        self.activations = []
 
         return grad_w, grad_b
 
@@ -114,7 +135,16 @@ class NN(object):
         accuracy = np.sum(true_label == predicted_label) / len(true_label)
         return accuracy
 
-    def train(self, train_data, train_labels, valid_data, valid_labels, batch_size, learning_rate, n_epoch):
+    def train(
+        self,
+        train_data,
+        train_labels,
+        valid_data,
+        valid_labels,
+        batch_size,
+        learning_rate,
+        n_epoch,
+    ):
         n_total = len(train_labels)
         train_losses = []
         valid_losses = []
@@ -133,8 +163,8 @@ class NN(object):
             train_acc = 0.0
             while end <= n_total:
                 # mini-batch
-                data = train_data[start: end]
-                label = train_labels[start: end]
+                data = train_data[start:end]
+                label = train_labels[start:end]
                 # forward pass
                 prediction = self.forward(data)
 
@@ -160,23 +190,24 @@ class NN(object):
 
             train_acc = train_acc / n_total
             train_accuracy.append(train_acc)
-            print(f'Epoch {epoch} train loss : {avg_epoch_loss}')
-            print(f'Epoch {epoch} train accuracy : {train_acc}')
+            print(f"Epoch {epoch} train loss : {avg_epoch_loss}")
+            print(f"Epoch {epoch} train accuracy : {train_acc}")
 
-            valid_loss, valid_acc = self.validate(
-                valid_data, valid_labels, batch_size)
+            valid_loss, valid_acc = self.validate(valid_data, valid_labels, batch_size)
 
-            print(f'Epoch {epoch} validation loss : {valid_loss}')
-            print(f'Epoch {epoch} validation accuracy : {valid_acc}')
+            print(f"Epoch {epoch} validation loss : {valid_loss}")
+            print(f"Epoch {epoch} validation accuracy : {valid_acc}")
             valid_losses.append(valid_loss)
             valid_accuracy.append(valid_acc)
 
             if valid_acc > best_valid_acc:
                 best_valid_acc = valid_acc
                 best_model_epoch = epoch
-                print(f'Best validation performance at epoch {epoch} with validation accuracy : {valid_acc}')
+                print(
+                    f"Best validation performance at epoch {epoch} with validation accuracy : {valid_acc}"
+                )
                 # save the best model
-                with open('model.pickle', 'wb') as f:
+                with open("model.pickle", "wb") as f:
                     pickle.dump(self.linear_layers, f)
                 k = 0
             # elif k == p:
@@ -185,7 +216,7 @@ class NN(object):
             #     k += 1
             if not (epoch + 1) % 25:
                 learning_rate /= 2
-                print(f'At Epoch {epoch}  learning rate reduced to : {learning_rate}')
+                print(f"At Epoch {epoch}  learning rate reduced to : {learning_rate}")
         plt.plot(train_losses, label="Train loss")
         plt.plot(valid_losses, label="valid loss")
         plt.xlabel("epochs")
@@ -202,8 +233,8 @@ class NN(object):
         valid_acc = 0.0
         while end <= n_valid:
             # mini-batch
-            data = valid_data[start: end]
-            label = valid_labels[start: end]
+            data = valid_data[start:end]
+            label = valid_labels[start:end]
             # forward pass
             prediction = self.forward(data)
 
