@@ -14,7 +14,7 @@ def arg_parser():
     argparser.add_argument('--n_hidden', type=int, default=2)
     argparser.add_argument('--n_epoch', type=int, default=20)
     argparser.add_argument('--batch_size', type=int, default=100)
-    argparser.add_argument('--learning_rate', type=float, default=0.0001)
+    argparser.add_argument('--learning_rate', type=float, default=0.001)
     argparser.add_argument('--para_init', type=str, default="Glorot")
     args = argparser.parse_args()
 
@@ -128,6 +128,7 @@ if __name__ == "__main__":
 
     args = arg_parser()
 
+    # part 1 of question 1
     # using_different_initialization(
     # train_data, train_label, args.batch_size, args.learning_rate,
     # n_epoch=10)

@@ -183,8 +183,8 @@ class NN(object):
             #     break
             # else:
             #     k += 1
-            if not (epoch + 1) % 40:
-                learning_rate /= 5
+            if not (epoch + 1) % 25:
+                learning_rate /= 2
                 print(f'At Epoch {epoch}  learning rate reduced to : {learning_rate}')
         plt.plot(train_losses, label="Train loss")
         plt.plot(valid_losses, label="valid loss")
