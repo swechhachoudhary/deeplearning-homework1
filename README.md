@@ -25,7 +25,7 @@ Data is a 2-d matirx for MLP.
 
 #### Step 2: Data preparation
 
-Train data (60000)is split to train set (50000) and valid set (10000).
+Train data (60000)is split to train set (55000) and valid set (5000).
 Test data consist of 10000 samples.
 
 For CNN, data is 4-dim tensor.
