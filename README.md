@@ -1,8 +1,8 @@
 # DL-Homework1
 
-# Assignment_1 - Problem2
+#### Problem2
 
-## MNIST digit classification task using Tensorflow
+#### MNIST digit classification task using Tensorflow
 
 This is done as part of assignment for deeplearning course-IFT6135.
 
