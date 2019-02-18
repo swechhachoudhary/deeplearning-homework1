@@ -217,23 +217,23 @@ if __name__ == "__main__":
     args = arg_parser()
 
     # part 1 of question 1
-    # using_different_initialization(
-    #     train_data, train_label, args.batch_size, args.learning_rate,
-    #     n_epoch=10)
+    using_different_initialization(
+        train_data, train_label, args.batch_size, args.learning_rate,
+        n_epoch=10)
 
-    # model = NN(
-    #     hidden_dims=(512, 1024), n_hidden=args.n_hidden, para_init=args.para_init
-    # )
+    model = NN(
+        hidden_dims=(512, 1024), n_hidden=args.n_hidden, para_init=args.para_init
+    )
 
-    # model.train(
-    #     train_data,
-    #     train_label,
-    #     valid_data,
-    #     valid_label,
-    #     args.batch_size,
-    #     args.learning_rate,
-    #     args.n_epoch,
-    # )
+    model.train(
+        train_data,
+        train_label,
+        valid_data,
+        valid_label,
+        args.batch_size,
+        args.learning_rate,
+        args.n_epoch,
+    )
 
     # # load best model
     with open("model.pickle", "rb") as f:
@@ -245,6 +245,6 @@ if __name__ == "__main__":
 
     best_model.linear_layers = best_parameters
 
-    # test(test_data, test_label, args.batch_size, best_model)
+    test(test_data, test_label, args.batch_size, best_model)
 
     plot_max_diff_between_gradients(train_data, train_label, best_model)
