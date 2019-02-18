@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 
 class NN(object):
+
     def __init__(
         self,
         hidden_dims=(512, 1024),
@@ -27,7 +28,8 @@ class NN(object):
         self.activations = []
         self.relu = Relu()
         self.linear_layers.append(
-            Linear(self.input_size, self.hidden_dims[0], parameter_init=para_init)
+            Linear(self.input_size, self.hidden_dims[
+                   0], parameter_init=para_init)
         )
         for i in range(n_hidden - 1):
             self.linear_layers.append(
@@ -39,10 +41,12 @@ class NN(object):
             )
 
         self.linear_layers.append(
-            Linear(self.hidden_dims[-1], self.n_class, parameter_init=para_init)
+            Linear(self.hidden_dims[-1], self.n_class,
+                   parameter_init=para_init)
         )
 
     def forward(self, input):
+        self.activations = []
         for i in range(self.n_hidden):
             hidden_output = self.linear_layers[i].forward(input)
             activation = self.relu.relu(hidden_output)
@@ -91,7 +95,7 @@ class NN(object):
         grad_yL = -onehot + prediction
         grad_y.append(grad_yL)
 
-        for l in range(L, -1, -1):  # 2,1,0 for L = 2
+        for l in range(L, -1, -1):  # l = {2,1,0} for L = 2
 
             if l < L:
                 grad_al = np.matmul(
@@ -154,7 +158,7 @@ class NN(object):
         best_model_epoch = 0
 
         # patience p
-        p = 7
+        p = 5
         k = 0
         for epoch in range(n_epoch):
             start = 0
@@ -193,7 +197,8 @@ class NN(object):
             print(f"Epoch {epoch} train loss : {avg_epoch_loss}")
             print(f"Epoch {epoch} train accuracy : {train_acc}")
 
-            valid_loss, valid_acc = self.validate(valid_data, valid_labels, batch_size)
+            valid_loss, valid_acc = self.validate(
+                valid_data, valid_labels, batch_size)
 
             print(f"Epoch {epoch} validation loss : {valid_loss}")
             print(f"Epoch {epoch} validation accuracy : {valid_acc}")
@@ -210,19 +215,24 @@ class NN(object):
                 with open("model.pickle", "wb") as f:
                     pickle.dump(self.linear_layers, f)
                 k = 0
-            # elif k == p:
-            #     break
-            # else:
-            #     k += 1
-            if not (epoch + 1) % 25:
-                learning_rate /= 2
-                print(f"At Epoch {epoch}  learning rate reduced to : {learning_rate}")
+            elif k == p:
+                break
+            else:
+                k += 1
+            # if not (epoch + 1) % 25:
+            #     learning_rate /= 2
+            # print(f"At Epoch {epoch}  learning rate reduced to :
+            # {learning_rate}")
         plt.plot(train_losses, label="Train loss")
         plt.plot(valid_losses, label="valid loss")
         plt.xlabel("epochs")
         plt.ylabel("loss")
         plt.legend()
         plt.savefig("learning_curves.png")
+        plt.close()
+        print(
+            f"Best validation performance at epoch {best_model_epoch} with validation accuracy : {best_valid_acc}"
+        )
         return
 
     def validate(self, valid_data, valid_labels, batch_size):

@@ -1,0 +1,33 @@
+INFO:root:-------------train loss for Zero initialization of weights------------
+INFO:root:Epoch 0 train loss for Zero initialization of weights: 2.30147178604126
+INFO:root:Epoch 1 train loss for Zero initialization of weights: 2.3013092163085935
+INFO:root:Epoch 2 train loss for Zero initialization of weights: 2.301308974456787
+INFO:root:Epoch 3 train loss for Zero initialization of weights: 2.301308974761963
+INFO:root:Epoch 4 train loss for Zero initialization of weights: 2.301308977203369
+INFO:root:Epoch 5 train loss for Zero initialization of weights: 2.3013089779663085
+INFO:root:Epoch 6 train loss for Zero initialization of weights: 2.30130897567749
+INFO:root:Epoch 7 train loss for Zero initialization of weights: 2.3013089707946777
+INFO:root:Epoch 8 train loss for Zero initialization of weights: 2.3013089788818357
+INFO:root:Epoch 9 train loss for Zero initialization of weights: 2.3013089770507813
+INFO:root:-------------train loss for Normal initialization of weights------------
+INFO:root:Epoch 0 train loss for Normal initialization of weights: 2727.90218879753
+INFO:root:Epoch 1 train loss for Normal initialization of weights: 2.44215044117961
+INFO:root:Epoch 2 train loss for Normal initialization of weights: 2.301050867520285
+INFO:root:Epoch 3 train loss for Normal initialization of weights: 2.301028614323959
+INFO:root:Epoch 4 train loss for Normal initialization of weights: 2.301028775971266
+INFO:root:Epoch 5 train loss for Normal initialization of weights: 2.301028776988659
+INFO:root:Epoch 6 train loss for Normal initialization of weights: 2.3010287769957634
+INFO:root:Epoch 7 train loss for Normal initialization of weights: 2.3010287770079785
+INFO:root:Epoch 8 train loss for Normal initialization of weights: 2.3010287770034332
+INFO:root:Epoch 9 train loss for Normal initialization of weights: 2.3010287770038365
+INFO:root:-------------train loss for Glorot initialization of weights------------
+INFO:root:Epoch 0 train loss for Glorot initialization of weights: 0.4018272231589028
+INFO:root:Epoch 1 train loss for Glorot initialization of weights: 0.19057703903241072
+INFO:root:Epoch 2 train loss for Glorot initialization of weights: 0.13759684966306338
+INFO:root:Epoch 3 train loss for Glorot initialization of weights: 0.10641433217707154
+INFO:root:Epoch 4 train loss for Glorot initialization of weights: 0.08520175374266396
+INFO:root:Epoch 5 train loss for Glorot initialization of weights: 0.06975427750770567
+INFO:root:Epoch 6 train loss for Glorot initialization of weights: 0.05795738112236605
+INFO:root:Epoch 7 train loss for Glorot initialization of weights: 0.04855687194755615
+INFO:root:Epoch 8 train loss for Glorot initialization of weights: 0.04090652549927943
+INFO:root:Epoch 9 train loss for Glorot initialization of weights: 0.03460860850711939

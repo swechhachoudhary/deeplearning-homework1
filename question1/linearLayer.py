@@ -1,6 +1,8 @@
 import numpy as np
 from numpy import random
 
+np.random.seed(10)
+
 
 class Linear(object):
 
@@ -18,11 +20,13 @@ class Linear(object):
             pass
         elif para_init == "Normal":
             self.weights = random.normal(
-                loc=0.0, scale=1.0, size=(self.output_size, self.input_size))
+                loc=0.0, scale=1.0, size=(self.output_size, self.input_size)
+            )
         elif para_init == "Glorot":
             d = np.sqrt(6 / (self.input_size + self.output_size))
             self.weights = random.uniform(
-                low=-d, high=d, size=(self.output_size, self.input_size))
+                low=-d, high=d, size=(self.output_size, self.input_size)
+            )
 
     def forward(self, input):
         output = np.matmul(input, self.weights.T) + self.bias.T
